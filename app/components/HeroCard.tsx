@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,22 +7,132 @@ import { useEffect, useState } from "react";
 
 export default function HeroCard() {
     const [flipped, setFlipped] = useState(false);
+    const [typedText, setTypedText] = useState("");
+    const [typingDone, setTypingDone] = useState(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setFlipped((prev) => !prev);
-        }, 5000);
+        }, 8000);
 
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        if (!flipped) {
+            setTypedText("");
+            setTypingDone(false);
+            return;
+        }
+
+        const fullText = `const Reem = {
+  role: "Frontend Developer",
+  learning: "Full Stack",
+  stack: ["React", "Next.js", "TypeScript", "Node.js"],
+  passion: "Building for the web"
+};
+
+console.log(
+  "Let's build something amazing!"
+);`;
+
+        let index = 0;
+
+        setTypedText("");
+
+        const interval = setInterval(() => {
+            index++;
+            setTypedText(fullText.slice(0, index));
+
+            if (index >= fullText.length) {
+                clearInterval(interval);
+                setTypingDone(true);
+            }
+        }, 35);
+
+        return () => clearInterval(interval);
+    }, [flipped]);
+
+    const renderTerminalCode = () => {
+        const lines = typedText.split("\n");
+
+        return lines.map((line, index) => {
+            let content;
+
+            if (index === 0) {
+                content = (
+                    <>
+                        {line.startsWith("const") ? (
+                            <>
+                                <span className="text-accent">const</span>
+                                {line.slice(5).startsWith(" ")
+                                    ? " "
+                                    : ""}
+                                <span className="text-secondary">
+                                    {line.slice(6).split(" =")[0]}
+                                </span>
+                                {line.includes(" =")
+                                    ? line.slice(line.indexOf(" ="))
+                                    : ""}
+                            </>
+                        ) : (
+                            line
+                        )}
+                    </>
+                );
+            } else if (
+                line.trim().startsWith("role:") ||
+                line.trim().startsWith("learning:") ||
+                line.trim().startsWith("stack:") ||
+                line.trim().startsWith("passion:")
+            ) {
+                const colonIndex = line.indexOf(":");
+                const key = line.slice(0, colonIndex + 1);
+                const value = line.slice(colonIndex + 1);
+
+                content = (
+                    <>
+                        <span className="text-slate-300">{key}</span>
+                        <span className="text-green-300">{value}</span>
+                    </>
+                );
+            } else if (line.includes("console.log")) {
+                content = (
+                    <>
+                        <span className="text-accent">
+                            {line.split(".")[0]}
+                        </span>
+                        .
+                        <span className="text-secondary">
+                            {line.split(".")[1]?.split("(")[0]}
+                        </span>
+                        <span className="text-white">
+                            {line.includes("(")
+                                ? line.slice(line.indexOf("("))
+                                : ""}
+                        </span>
+                    </>
+                );
+            } else if (line.includes("Let's build")) {
+                content = (
+                    <span className="text-green-300">{line}</span>
+                );
+            } else {
+                content = <span className="text-white">{line}</span>;
+            }
+
+            return (
+                <div key={index} className="min-h-7 whitespace-pre-wrap break-words">
+                    {content}
+                </div>
+            );
+        });
+    };
+
     return (
         <div className="relative mx-auto flex h-[520px] w-full max-w-[620px] items-center justify-center [perspective:1400px]">
 
-            {/* ========================================= */}
             {/* AMBIENT GLOW */}
-            {/* ========================================= */}
-
             <motion.div
                 animate={{
                     opacity: [0.15, 0.35, 0.15],
@@ -35,10 +146,7 @@ export default function HeroCard() {
                 className="absolute h-[360px] w-[360px] rounded-full bg-primary/30 blur-[110px]"
             />
 
-            {/* ========================================= */}
             {/* GRADIENT ORBIT 1 */}
-            {/* ========================================= */}
-
             <motion.div
                 animate={{
                     rotate: 360,
@@ -69,10 +177,7 @@ export default function HeroCard() {
                 }}
             />
 
-            {/* ========================================= */}
             {/* GRADIENT ORBIT 2 */}
-            {/* ========================================= */}
-
             <motion.div
                 animate={{
                     rotate: -360,
@@ -99,14 +204,9 @@ export default function HeroCard() {
                 className="absolute h-[500px] w-[500px] rounded-full border border-accent/30"
             />
 
-            {/* ========================================= */}
-            {/* ORBITING DOTS */}
-            {/* ========================================= */}
-
+            {/* ORBITING DOT 1 */}
             <motion.div
-                animate={{
-                    rotate: 360,
-                }}
+                animate={{ rotate: 360 }}
                 transition={{
                     duration: 12,
                     repeat: Infinity,
@@ -127,10 +227,9 @@ export default function HeroCard() {
                 />
             </motion.div>
 
+            {/* ORBITING DOT 2 */}
             <motion.div
-                animate={{
-                    rotate: -360,
-                }}
+                animate={{ rotate: -360 }}
                 transition={{
                     duration: 16,
                     repeat: Infinity,
@@ -151,10 +250,7 @@ export default function HeroCard() {
                 />
             </motion.div>
 
-            {/* ========================================= */}
             {/* 3D FLIP CARD */}
-            {/* ========================================= */}
-
             <motion.div
                 animate={{
                     rotateY: flipped ? 180 : 0,
@@ -169,10 +265,7 @@ export default function HeroCard() {
                 className="relative z-10 h-[360px] w-[560px] sm:h-[390px] sm:w-[620px]"
             >
 
-                {/* ======================================= */}
-                {/* FRONT — FLOATING IMAGE */}
-                {/* ======================================= */}
-
+                {/* FRONT — IMAGE */}
                 <div
                     className="absolute inset-0"
                     style={{
@@ -180,9 +273,7 @@ export default function HeroCard() {
                     }}
                 >
                     <motion.div
-                        animate={{
-                            y: [0, -8, 0],
-                        }}
+                        animate={{ y: [0, -8, 0] }}
                         transition={{
                             duration: 4,
                             repeat: Infinity,
@@ -201,34 +292,13 @@ export default function HeroCard() {
                                 fill
                                 priority
                                 sizes="(max-width: 768px) 95vw, 520px"
-                                className="object-contain scale-[1.2]"
+                                className="scale-[1.2] object-contain"
                             />
-
-                            {/* Very subtle bottom fade */}
-                            {/* <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/20 to-transparent" /> */}
                         </div>
-
-                        {/* Floating Label */}
-                        {/* <motion.div
-                            animate={{
-                                opacity: [0.45, 0.9, 0.45],
-                            }}
-                            transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                            }}
-                            className="absolute bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-xs tracking-[0.3em] text-primary"
-                        >
-                            FRONTEND DEVELOPER
-                        </motion.div> */}
                     </motion.div>
                 </div>
 
-                {/* ======================================= */}
                 {/* BACK — TERMINAL */}
-                {/* ======================================= */}
-
                 <div
                     className="absolute inset-0 overflow-hidden rounded-3xl border border-secondary/60 bg-[#070b1b]/95 shadow-[0_0_70px_rgba(37,99,235,0.3)] backdrop-blur-xl"
                     style={{
@@ -236,7 +306,6 @@ export default function HeroCard() {
                         transform: "rotateY(180deg)",
                     }}
                 >
-
                     {/* Terminal Header */}
                     <div className="flex h-14 items-center border-b border-white/10 px-5">
                         <div className="flex gap-2">
@@ -256,75 +325,35 @@ export default function HeroCard() {
                         <div className="pointer-events-none absolute right-0 top-0 h-60 w-60 rounded-full bg-secondary/15 blur-[90px]" />
 
                         <div className="relative">
-
-                            <div className=" text-slate-500">
+                            <div className="text-slate-500">
                                 ~/portfolio/intro.ts
                             </div>
 
-                            <div>
-                                <span className="text-accent">const</span>{" "}
-                                <span className="text-secondary">Reem</span> = {"{"}
-                            </div>
+                            <div className="mt-2">
+                                {renderTerminalCode()}
 
-                            <div className="pl-5">
-                                <span className="text-slate-300">role:</span>{" "}
-                                <span className="text-green-300">
-                                    "Frontend Developer"
-                                </span>
-                                ,
-                            </div>
+                                {!typingDone && flipped && (
+                                    <motion.span
+                                        animate={{ opacity: [1, 0, 1] }}
+                                        transition={{
+                                            duration: 1,
+                                            repeat: Infinity,
+                                        }}
+                                        className="ml-1 inline-block h-5 w-2 bg-primary align-middle"
+                                    />
+                                )}
 
-                            <div className="pl-5">
-                                <span className="text-slate-300">learning:</span>{" "}
-                                <span className="text-green-300">
-                                    "Full Stack"
-                                </span>
-                                ,
+                                {typingDone && (
+                                    <motion.span
+                                        animate={{ opacity: [1, 0, 1] }}
+                                        transition={{
+                                            duration: 1,
+                                            repeat: Infinity,
+                                        }}
+                                        className="ml-1 inline-block h-5 w-2 bg-primary align-middle"
+                                    />
+                                )}
                             </div>
-
-                            <div className="pl-5">
-                                <span className="text-slate-300">stack:</span>{" "}
-                                [
-                                <span className="text-green-300">
-                                    "React", "Next.js", "TypeScript", "Node.js"
-                                </span>
-                                ]
-                            </div>
-
-                            <div className="pl-5">
-                                <span className="text-slate-300">passion:</span>{" "}
-                                <span className="text-green-300">
-                                    "Building for the web"
-                                </span>
-                            </div>
-
-                            <div>
-                                {"}"};
-                            </div>
-
-                            <div className="mt-5">
-                                <span className="text-accent">console</span>
-                                .
-                                <span className="text-secondary">log</span>
-                                <span className="text-white">(</span>
-                            </div>
-
-                            <div className="pl-5 text-green-300">
-                                "Let's build something amazing!"
-                            </div>
-
-                            <div>
-                                )
-                                <motion.span
-                                    animate={{ opacity: [1, 0, 1] }}
-                                    transition={{
-                                        duration: 1,
-                                        repeat: Infinity,
-                                    }}
-                                    className="ml-1 inline-block h-5 w-2 bg-primary align-middle"
-                                />
-                            </div>
-
                         </div>
                     </div>
 
@@ -335,7 +364,7 @@ export default function HeroCard() {
                         </span>
 
                         <span className="font-mono text-xs text-secondary">
-                            READY
+                            {typingDone ? "READY" : "TYPING..."}
                         </span>
                     </div>
                 </div>

@@ -1,9 +1,24 @@
+
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import HeroCard from "./HeroCard";
 
 export default function Hero() {
+  const [showScroll, setShowScroll] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScroll(window.scrollY < 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section
       id="home"
@@ -28,9 +43,7 @@ export default function Hero() {
 
       {/* Main Container */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2 lg:px-8">
-
-        {/* ================= LEFT CONTENT ================= */}
-
+        {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -137,39 +150,9 @@ export default function Hero() {
           </motion.div>
 
           {/* Tech Stack */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.7,
-            }}
-            className="mt-11"
-          >
-            <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.35em] text-slate-500">
-              Tech Stack
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              {[
-                "React",
-                "Next.js",
-                "TypeScript",
-                "Node.js",
-              ].map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:text-white"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
 
-        {/* ================= RIGHT CARD ================= */}
-
+        {/* RIGHT CARD */}
         <motion.div
           initial={{ opacity: 0, x: 50, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -178,7 +161,7 @@ export default function Hero() {
             delay: 0.3,
             ease: "easeOut",
           }}
-          className="relative flex items-center justify-center -translate-y-20"
+          className="relative flex -translate-y-20 items-center justify-center"
         >
           <HeroCard />
         </motion.div>
@@ -189,19 +172,25 @@ export default function Hero() {
         href="#about"
         initial={{ opacity: 0 }}
         animate={{
-          opacity: 1,
-          y: [0, 8, 0],
+          opacity: showScroll ? 1 : 0,
+          y: showScroll ? [0, 8, 0] : -15,
         }}
         transition={{
           opacity: {
-            duration: 1,
-            delay: 1.2,
+            duration: 0.4,
           },
-          y: {
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
+          y: showScroll
+            ? {
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }
+            : {
+                duration: 0.3,
+              },
+        }}
+        style={{
+          pointerEvents: showScroll ? "auto" : "none",
         }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-slate-500 md:flex"
       >
