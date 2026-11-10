@@ -1,14 +1,16 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Projects", href: "/projects" },
+  { name: "Experience", href: "/experience" },
+  { name: "Skills", href: "/skills" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -27,25 +29,24 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
-        scrolled
-          ? "border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-        
+    <header className="fixed left-0 top-0 z-50 w-full">
+      <nav
+        className={`navbar-glass relative mx-auto flex h-20 w-full items-center justify-between overflow-hidden rounded-b-3xl border-b border-white/20 px-6 backdrop-blur-2xl transition-all duration-500 lg:px-12 ${
+  scrolled
+    ? "bg-white/55 shadow-lg shadow-purple-500/10 dark:border-white/10 dark:bg-[#050816]/45"
+    : "bg-white/35 dark:border-white/10 dark:bg-[#050816]/25"
+}`}
+      >
+        {/* Animated Gradient - Light Mode Only */}
+        <div className="navbar-gradient pointer-events-none absolute inset-0 -z-10 dark:hidden" />
+
         {/* Logo */}
-        <a
-          href="#home"
-          className="group flex items-center gap-2"
-        >
-          <span className="text-2xl font-bold tracking-tight text-white">
-            R<span className="text-primary">M</span>
+        <a href="#home" className="group flex shrink-0 items-center gap-2">
+          <span className="text-2xl font-bold tracking-tight text-purple-900 dark:text-white">
+            R<span className="text-fuchsia-600 dark:text-fuchsia-400">M</span>
           </span>
 
-          <span className="hidden text-sm text-muted sm:block">
+          <span className="hidden text-sm text-purple-900 dark:text-white sm:block">
             Reem Mohamed
           </span>
         </a>
@@ -56,31 +57,35 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-white"
+              className="text-sm font-medium text-purple-900 transition-colors duration-300 hover:text-fuchsia-600 dark:text-white dark:hover:text-fuchsia-300"
             >
               {link.name}
             </a>
           ))}
         </div>
 
-        {/* CV Button */}
-        <a
-          href="/Reem-Mohamed-CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-primary hover:bg-primary/20 hover:shadow-[0_0_25px_rgba(139,92,246,0.25)] sm:block"
-        >
-          Download CV
-        </a>
+        {/* Right Actions */}
+        <div className="flex shrink-0 items-center gap-5">
+          <ThemeToggle />
+
+          <a
+            href="/Reem-Mohamed-CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-purple-500/20 transition-all duration-300 hover:shadow-fuchsia-500/30 sm:block"
+          >
+            Download CV
+          </a>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="rounded-lg border border-white/10 p-2 text-white md:hidden"
+          className="rounded-lg p-2 text-purple-900 dark:text-white md:hidden"
           aria-label="Open menu"
         >
-          <span className="block h-0.5 w-5 bg-white" />
-          <span className="mt-1.5 block h-0.5 w-5 bg-white" />
-          <span className="mt-1.5 block h-0.5 w-5 bg-white" />
+          <span className="block h-0.5 w-5 bg-current" />
+          <span className="mt-1.5 block h-0.5 w-5 bg-current" />
+          <span className="mt-1.5 block h-0.5 w-5 bg-current" />
         </button>
       </nav>
     </header>

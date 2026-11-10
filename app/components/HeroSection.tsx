@@ -30,7 +30,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[160px]" />
 
       {/* Grid Background */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.09]">
         <div
           className="h-full w-full"
           style={{
@@ -43,6 +43,7 @@ export default function Hero() {
 
       {/* Main Container */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2 lg:px-8">
+
         {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -60,7 +61,7 @@ export default function Hero() {
               duration: 0.6,
               delay: 0.2,
             }}
-            className="mb-5 text-sm font-semibold uppercase tracking-[0.35em] text-accent"
+            className="mb-5 text-sm font-semibold uppercase tracking-[0.35em] text-purple-700 dark:text-accent"
           >
             Hello, I&quot;m
           </motion.p>
@@ -73,7 +74,7 @@ export default function Hero() {
               duration: 0.7,
               delay: 0.3,
             }}
-            className="text-6xl font-bold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl"
+            className="text-6xl font-bold leading-[0.95] tracking-tight text dark:text dark:text-white sm:text-7xl lg:text-8xl"
           >
             Reem
 
@@ -90,13 +91,13 @@ export default function Hero() {
               duration: 0.7,
               delay: 0.4,
             }}
-            className="mt-8 text-2xl font-semibold leading-relaxed text-white sm:text-3xl"
+            className="mt-8 text-2xl font-semibold leading-relaxed text dark:text dark:text-white sm:text-3xl"
           >
             Frontend Developer
 
             <span className="text-primary"> & </span>
 
-            <span className="block text-slate-400 sm:inline">
+            <span className="block text-purple-700 dark:text-slate-400 sm:inline">
               Aspiring Full Stack Developer
             </span>
           </motion.h2>
@@ -109,7 +110,7 @@ export default function Hero() {
               duration: 0.7,
               delay: 0.5,
             }}
-            className="mt-7 max-w-xl text-base leading-8 text-muted sm:text-lg"
+            className="mt-7 max-w-xl text-base leading-8 text-purple-700 dark:text-muted sm:text-lg"
           >
             I build modern, responsive web experiences with React, Next.js,
             and TypeScript, while expanding my expertise into backend
@@ -143,13 +144,11 @@ export default function Hero() {
               href="/Reem-Mohamed-CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border border-primary/40 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-accent hover:bg-primary/10"
+                className="cv-download rounded-full border border-purple-400/50 bg-purple-500/5 px-7 py-3.5 text-sm font-semibold backdrop-blur-md transition-all duration-300 hover:border-fuchsia-500 hover:bg-purple-500/10 dark:border-primary/40 dark:bg-white/5 dark:hover:border-accent dark:hover:bg-primary/10"
             >
               Download CV ↓
             </a>
           </motion.div>
-
-          {/* Tech Stack */}
         </motion.div>
 
         {/* RIGHT CARD */}
@@ -192,7 +191,7 @@ export default function Hero() {
         style={{
           pointerEvents: showScroll ? "auto" : "none",
         }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-slate-500 md:flex"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-purple-700 dark:text-slate-400 md:flex"
       >
         <span>Scroll Down</span>
 

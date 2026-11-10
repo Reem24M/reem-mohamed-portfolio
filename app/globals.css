@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
+
 :root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+
+  --primary: #8b5cf6;
+  --secondary: #2563eb;
+  --accent: #d946ef;
+
+  --muted: #64748b;
+  --surface: #ffffff;
+}
+
+.dark {
   --background: #050816;
   --foreground: #f8fafc;
 
@@ -40,6 +53,65 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+}
+/* navbar */
+
+.navbar-gradient {
+  background: linear-gradient(
+    120deg,
+    rgba(139, 92, 246, 0.16),
+    rgba(37, 99, 235, 0.13),
+    rgba(217, 70, 239, 0.14),
+    rgba(139, 92, 246, 0.16)
+  );
+  background-size: 300% 300%;
+  animation: navbar-gradient-move 10s ease infinite;
+}
+
+.dark .navbar-gradient {
+  background: linear-gradient(
+    120deg,
+    rgba(139, 92, 246, 0.28),
+    rgba(37, 99, 235, 0.22),
+    rgba(217, 70, 239, 0.2),
+    rgba(139, 92, 246, 0.28)
+  );
+  background-size: 300% 300%;
+}
+
+@keyframes navbar-gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-gradient {
+    animation: none;
+  }
+}
+/* hero section */
+/* Download CV button */
+.cv-download {
+  color: #935AF3 !important;
+}
+
+.dark .cv-download {
+  color: #ffffff !important;
+}
+.text {
+   color: #935AF3 !important;
+}
+.dark .text {
+   color: #ffffff !important;
 }
 /* Terminal Scrollbar */
 .terminal-scroll {
@@ -271,4 +343,37 @@ body {
   opacity: 0;
   transform: translateY(-15px);
   pointer-events: none;
+}
+.cards-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scroll-cards 30s linear infinite;
+}
+
+.cards-track:hover {
+  animation-play-state: paused;
+}
+
+/*  projects section */
+
+@keyframes drift-one { /* نفس محتوى float-a */ }
+@keyframes drift-two { /* نفس محتوى float-b */ }
+@keyframes drift-three { /* نفس محتوى float-c */ }
+
+.drift-card {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.drift-card.d1 { animation-name: drift-one; animation-duration: 9s; }
+.drift-card.d2 { animation-name: drift-two; animation-duration: 11s; }
+.drift-card.d3 { animation-name: drift-three; animation-duration: 13s; }
+
+.drift-card:hover {
+  animation-play-state: paused;
+}
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }
