@@ -65,15 +65,19 @@ export default function TechMarquee() {
   }, []);
 
   return (
+    <div>
+
+      <h1 className="my-10 px-6 text-center text-4xl font-bold">
+        <span className="bg-gradient-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
+         TECHNOLOGIES & TOOLS
+        </span>
+      </h1>
     <section
       id="skills"
-      className="tech-marquee relative overflow-hidden border-y border-purple-400/10 py-8"
+      className="tech-marquee relative overflow-hidden border-y border-purple-400/20 py-8 transition-colors duration-500"
     >
       <div className="tech-ambient" />
 
-      <p className="relative z-10 mb-6 text-center text-xs font-medium tracking-[0.3em] text-purple-300">
-        TECHNOLOGIES & TOOLS
-      </p>
 
       <div
         ref={trackRef}
@@ -107,7 +111,7 @@ export default function TechMarquee() {
                 <div
                   key={tech.name}
                   title={tech.name}
-                  className="tech-item group/item relative flex shrink-0 items-center gap-3 rounded-xl px-4 py-3 text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:text-white"
+                  className="tech-item group/item relative flex shrink-0 items-center gap-3 rounded-xl px-4 py-3 text-slate-700 transition-all duration-300 hover:-translate-y-1 hover:text-purple-700 dark:text-slate-400 dark:hover:text-white"
                 >
                   <div className="item-glow" />
 
@@ -129,6 +133,21 @@ export default function TechMarquee() {
       <style jsx>{`
         .tech-marquee {
           isolation: isolate;
+          background:
+            radial-gradient(
+              ellipse at 15% 50%,
+              rgba(124, 58, 237, 0.10),
+              transparent 45%
+            ),
+            radial-gradient(
+              ellipse at 85% 50%,
+              rgba(59, 130, 246, 0.08),
+              transparent 45%
+            ),
+            #f8fafc;
+        }
+
+        :global(.dark) .tech-marquee {
           background:
             radial-gradient(
               ellipse at 15% 50%,
@@ -155,12 +174,12 @@ export default function TechMarquee() {
           );
           filter: blur(45px);
           animation: ambient-pulse 7s ease-in-out infinite alternate;
-        }
+          }
 
-        .tech-track {
-          isolation: isolate;
+          .tech-track {
+            isolation: isolate;
         }
-
+        
         .pointer-glow {
           position: absolute;
           z-index: -1;
@@ -178,17 +197,21 @@ export default function TechMarquee() {
           transform: translate(-50%, -50%);
           transition: opacity 250ms ease;
           filter: blur(12px);
-        }
-
+          }
+          
         .pointer-glow.is-visible {
           opacity: 1;
+          }
+
+          .tech-item {
+            border: 1px solid transparent;
+          background: rgba(139, 92, 246, 0.035);
         }
 
-        .tech-item {
-          border: 1px solid transparent;
+        :global(.dark) .tech-item {
           background: rgba(255, 255, 255, 0.015);
         }
-
+        
         .item-glow {
           position: absolute;
           inset: 0;
@@ -203,49 +226,65 @@ export default function TechMarquee() {
             transparent 80%
           );
           transition: opacity 250ms ease;
-        }
+          }
 
         .tech-item:hover {
           border-color: rgba(168, 85, 247, 0.35);
           box-shadow:
-            0 0 20px rgba(139, 92, 246, 0.12),
+          0 0 20px rgba(139, 92, 246, 0.12),
             inset 0 0 14px rgba(139, 92, 246, 0.04);
         }
 
         .tech-item:hover .item-glow {
           opacity: 1;
         }
-
+        
         .edge-fade {
           position: absolute;
           inset-block: 0;
           z-index: 10;
           width: 60px;
           pointer-events: none;
+          }
+          
+          .edge-left {
+            left: 0;
+            background: linear-gradient(
+              to right,
+              #f8fafc,
+              transparent
+          );
+          }
+          
+          .edge-right {
+          right: 0;
+          background: linear-gradient(
+            to left,
+            #f8fafc,
+            transparent
+          );
         }
-
-        .edge-left {
-          left: 0;
+        
+        :global(.dark) .edge-left {
           background: linear-gradient(
             to right,
             #070918,
             transparent
           );
         }
-
-        .edge-right {
-          right: 0;
+        
+        :global(.dark) .edge-right {
           background: linear-gradient(
             to left,
             #070918,
             transparent
-          );
+            );
         }
-
+        
         .marquee-content {
           animation: marquee 35s linear infinite;
-        }
-
+          }
+          
         .tech-track:hover .marquee-content {
           animation-play-state: paused;
         }
@@ -253,12 +292,12 @@ export default function TechMarquee() {
         @keyframes marquee {
           from {
             transform: translateX(0);
-          }
-          to {
-            transform: translateX(-100%);
-          }
+            }
+            to {
+              transform: translateX(-100%);
+              }
         }
-
+        
         @keyframes ambient-pulse {
           from {
             opacity: 0.55;
@@ -267,19 +306,20 @@ export default function TechMarquee() {
           to {
             opacity: 1;
             transform: scale(1.08);
-          }
-        }
+            }
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+              .tech-ambient {
+                animation: none;
+                }
 
-        @media (prefers-reduced-motion: reduce) {
-          .tech-ambient {
-            animation: none;
-          }
-
-          .marquee-content {
-            animation-duration: 70s;
-          }
+                .marquee-content {
+                  animation-duration: 70s;
+                  }
         }
-      `}</style>
+        `}</style>
     </section>
+        </div>
   );
 }

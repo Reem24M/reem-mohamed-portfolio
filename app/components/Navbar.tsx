@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Experience", href: "/experience" },
-  { name: "Skills", href: "/skills" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "" },
+  { name: "About", href: "about" },
+  { name: "Projects", href: "projects" },
+  { name: "Experience", href: "experience" },
+  { name: "Skills", href: "skills" },
+  { name: "Contact", href: "contact" },
 ];
 
 export default function Navbar() {
@@ -53,15 +53,19 @@ export default function Navbar() {
 
         {/* Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-purple-900 transition-colors duration-300 hover:text-fuchsia-600 dark:text-white dark:hover:text-fuchsia-300"
-            >
-              {link.name}
-            </a>
-          ))}
+         {navLinks.map((link) => (
+  <button
+    key={link.name}
+    onClick={() => {
+      document.getElementById(link.href)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }}
+    className="text-sm font-medium"
+  >
+    {link.name}
+  </button>
+))}
         </div>
 
         {/* Right Actions */}

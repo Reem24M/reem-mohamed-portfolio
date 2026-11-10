@@ -3,12 +3,12 @@ import { getAllProjects } from '@/lib/projects';
 export default function ProjectsPage() {
   const projects = getAllProjects() as any[];
 
-  // بنكرر القائمة مرتين عشان الحركة تبان مستمرة
-  const loop = [...projects, ...projects];
+  
+  const loop = [...projects];
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#050816] pt-24 text-white">
-      <h1 className="mb-10 px-6 text-center text-4xl font-bold">
+      <h1 className="mb-10 px-6 text-center text-4xl text dark:text font-bold">
         My{' '}
         <span className="bg-gradient-to-r from-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
           Projects
